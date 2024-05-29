@@ -76,20 +76,18 @@ namespace noa{
         return true;
     }
 
-    bool Board::canBuildRoad(Vertex& v1, Vertex& v2, int n){ // check that the player can build ther a road
-        cout << "here  !!!" <<endl;
+    // check that the player can build ther a road
+    bool Board::canBuildRoad(Vertex& v1, Vertex& v2, int n){ 
+
         int numV1 = v1.getNum(), numV2 = v2.getNum();
 
         if(ver[numV1 -1].getOwner() == n && ver[numV1 -1].getBuild() != 0){
-            return true; // he have city or settelment in v1
-            
+            return true; // he have city or settelment in v1  
         }
-        cout << "v1 is not your"<< endl;
 
         if(ver[numV2 -1].getOwner() == n && ver[numV2 -1].getBuild() != 0){
             return true; // he have city or settelment in v2
         }
-        cout << "v2 is not your"<< endl;
 
         vector<int> ro = ver[numV1 -1].gerRoads(); // get the vertex's roads numbers
         if(!ro.empty()){
@@ -98,10 +96,7 @@ namespace noa{
                     return true;
                 }
             }
-        }else{
-            cout << "empty1 ???" <<endl;
         }
-        cout << "v1 roads is not your"<< endl;
 
         vector<int> ro2 = ver[numV2 -1].gerRoads(); // get the vertex's roads numbers
         if(!ro2.empty()){
@@ -111,13 +106,57 @@ namespace noa{
                 }
             }
         }
-        else{
-            cout << "empty2 ???" <<endl;
-        }
-        cout << "v2 roads is not your"<< endl;
 
         return false;
 
+    }
+
+    bool Board::canBuildSettel(int v, int n, Player* pNew){
+        bool flag = true;
+        vector<int> ro = ver[v -1].gerRoads();
+        if(!ro.empty()){
+            for(int i=0; i<static_cast<int>(ro.size()); i++){
+                //check if own of the roads around this vertex belong to the player
+                int nextV = roads[ro[i]-1].getTheOtherVer(v);
+                if(ver[nextV -1].getBuild() != 0){
+                    flag = false;
+                }
+            }
+        }
+        if(!ro.empty()){
+            for(int i=0; i<static_cast<int>(ro.size()); i++){
+                if(roads[ro[i]-1].getOwner() == n){ //check if own of the roads around this vertex belong to the player
+                    int nextV = roads[ro[i]-1].getTheOtherVer(v);
+                    vector<int> ro2 = ver[nextV -1].gerRoads();
+                    if(!ro2.empty()){
+                        for(int j=0; j<static_cast<int>(ro2.size()); j++){
+                            if(roads[ro2[j]-1].getOwner() == n && ver[v - 1].newSettel(n, 1, pNew) && flag){
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return false;
+    }
+
+    bool Board::canBuildSettelFirst(int v, int n, Player* pNew){
+        bool flag = true;
+        vector<int> ro = ver[v -1].gerRoads();
+        if(!ro.empty()){
+            for(int i=0; i<static_cast<int>(ro.size()); i++){
+                int nextV = roads[ro[i]-1].getTheOtherVer(v);
+                if(ver[nextV -1].getBuild() != 0){
+                    flag = false;
+                }
+            }
+        }
+        if(ver[v - 1].newSettel(n, 1, pNew) && flag){
+            return true;
+        }
+        return false;
     }
 
     void Board::getCardsStart(){

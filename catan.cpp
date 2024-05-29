@@ -43,15 +43,12 @@ namespace noa{
 
         Vertex& curr_ver = board.getVer(verNum);
         Player* p = &players[n];
+        int newVer =verNum;
 
         // check the nighbors !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        while(!curr_ver.newSettel(n, 1, p)){
-            int newVer;
-            cin >> newVer;
-            curr_ver = board.getVer(newVer);
+        if(board.canBuildSettel(newVer, n, p)){
+            players[n].placeSettelemnt();
         }
-    
-        players[n].placeSettelemnt();
 
     }
 
@@ -59,10 +56,10 @@ namespace noa{
 
         Vertex& curr_ver = board.getVer(verNum);
         Player* p = &players[n];
+        int newVer =verNum;
 
         // check the nighbors !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        while(!curr_ver.newSettel(n, 1, p)){
-            int newVer;
+        while(!board.canBuildSettelFirst(newVer, n, p)){
             cin >> newVer;
             curr_ver = board.getVer(newVer);
         }

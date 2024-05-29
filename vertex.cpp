@@ -26,7 +26,7 @@ namespace noa{
             return true;
         }
         else{
-            cout << "this spote is taken please choose diffrent one" << endl;
+            cout << "sorry but you can't build here"<< endl;
             return false;
         }
     }

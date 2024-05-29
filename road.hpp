@@ -35,6 +35,7 @@ namespace noa{
             bool isTaken();
             void setRoad(int owmer1);
             int getOwner();
+            int getTheOtherVer(int vorg);
 
     };
 }

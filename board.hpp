@@ -33,6 +33,8 @@ namespace noa{
             void getCardsStart();
             void getCards(int d);
             bool canBuildRoad(Vertex& v1, Vertex& v2, int n);
+            bool canBuildSettel(int v, int n, Player* pNew);
+            bool canBuildSettelFirst(int v, int n, Player* pNew);
 
             // constractor
             Board(){

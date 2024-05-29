@@ -29,7 +29,6 @@ namespace noa{
             owner = owner1;
             path = true;
         }
-
     }
 
     int Road::getOwner(){
@@ -38,6 +37,13 @@ namespace noa{
 
     bool Road::isTaken(){
         return path;
+    }
+
+    int Road::getTheOtherVer(int vorg){
+        if(vorg == numV1){
+            return numV2;
+        }
+        return numV1;
     }
 
 }
