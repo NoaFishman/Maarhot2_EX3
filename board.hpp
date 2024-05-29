@@ -5,9 +5,12 @@ Email: noa.fishman@gmail.com
 #include <iostream>
 #include <stdexcept>
 #include <vector>
-#include "vertex.hpp"
+#include <iomanip>
+#include <fstream>
+#include <cstdlib>
+//#include "vertex.hpp"
 #include "hex.hpp"
-#include "road.hpp"
+//#include "road.hpp"
 using namespace std;
 
 namespace noa{
@@ -21,105 +24,53 @@ namespace noa{
         public:
 
             void biuldBoard();
-            Vertex& getVer(vector<string> places, vector<int> placesNum);
+            void printBoard();
+            Vertex& getVer(int verNum);
+            bool newRoad(Vertex& v1, Vertex& v2, int n);
             Board getBoard(){
                 return *this;
             }
+            void getCardsStart();
+            void getCards(int d);
+            bool canBuildRoad(Vertex& v1, Vertex& v2, int n);
 
             // constractor
             Board(){
 
-                Vertex v1, v2, v3, v4, v5, v6, v7, v8, v9, v10;
-                Vertex v11, v12, v13, v14, v15, v16, v17, v18, v19, v20;
-                Vertex v21, v22, v23, v24, v25, v26, v27, v28, v29, v30;
-                Vertex v31, v32, v33, v34, v35, v36, v37, v38, v39, v40;
-                Vertex v41, v42, v43, v44, v45, v46, v47, v48, v49, v50;
-                Vertex v51, v52, v53, v54;
+                // Vertex v1(1), v2(2), v3(3), v4(4), v5(5), v6(6), v7(7), v8(8), v9(9), v10(10);
+                // Vertex v11(11), v12(12), v13(13), v14(14), v15(15), v16(16), v17(17), v18(18), v19(19), v20(20);
+                // Vertex v21(21), v22(22), v23(23), v24(24), v25(25), v26(26), v27(27), v28(28), v29(29), v30(30);
+                // Vertex v31(31), v32(32), v33(33), v34(34), v35(35), v36(36), v37(37), v38(38), v39(39), v40(40);
+                // Vertex v41(41), v42(42), v43(43), v44(44), v45(45), v46(46), v47(47), v48(48), v49(49), v50(50);
+                // Vertex v51(51), v52(52), v53(53), v54(54);
 
-                ver.push_back(v1), ver.push_back(v2), ver.push_back(v3), ver.push_back(v4), ver.push_back(v5);
-                ver.push_back(v6), ver.push_back(v7), ver.push_back(v8), ver.push_back(v9), ver.push_back(v10);
-                ver.push_back(v11), ver.push_back(v12), ver.push_back(v13), ver.push_back(v14), ver.push_back(v15);
-                ver.push_back(v16), ver.push_back(v17), ver.push_back(v18), ver.push_back(v19), ver.push_back(v20);
-                ver.push_back(v21), ver.push_back(v22), ver.push_back(v23), ver.push_back(v24), ver.push_back(v25);
-                ver.push_back(v26), ver.push_back(v27), ver.push_back(v28), ver.push_back(v29), ver.push_back(v30);
-                ver.push_back(v31), ver.push_back(v32), ver.push_back(v33), ver.push_back(v34), ver.push_back(v35);
-                ver.push_back(v36), ver.push_back(v37), ver.push_back(v38), ver.push_back(v39), ver.push_back(v40);
-                ver.push_back(v41), ver.push_back(v42), ver.push_back(v43), ver.push_back(v44), ver.push_back(v45);
-                ver.push_back(v46), ver.push_back(v47), ver.push_back(v48), ver.push_back(v49), ver.push_back(v50);
-                ver.push_back(v51), ver.push_back(v52), ver.push_back(v53), ver.push_back(v54);
+                Vertex v1(1,1,2), v2(2,1,3), v3(3,2,4,7), v4(4,3,5,8), v5(5,7,11,15);
+                Vertex v6(6,8,11,16), v7(7,15,19,23), v8(8,14,19,22), v9(9,6,10,14), v10(10,4,6);
+                Vertex v11(11,5,9), v12(12,9,12,17), v13(13,17,20,25), v14(14,16,20,24), v15(15,10,13); 
+                Vertex v16(16,13,21), v17(17,21,27,30), v18(18,22,27,31), v19(19,23,28,35), v20(20,28,24,33);
+                Vertex v21(21,12,18), v22(22,18,26), v23(23,26,29,35), v24(24,25,29,34), v25(25,31,36,39);
+                Vertex v26(26,32,36,40), v27(27,33,37,41), v28(28,34,37,42), v29(29,30,38), v30(30,38,44,47);
+                Vertex v31(31,39,44,48), v32(32,40,45,49), v33(33,41,45,50), v34(34,35,43), v35(35,42,46,51);
+                Vertex v36(36,43,46,52), v37(37,48,53,56), v38(38,49,53,57), v39(39,50,54,58), v40(40,51,54,59);
+                Vertex v41(41,47,55), v42(42,55,61), v43(43,56,61,64), v44(44,57,62,65), v45(45,58,62,66);
+                Vertex v46(46,59,63,67), v47(47,60,63), v48(48,52,60), v49(49,64,68), v50(50,65,68,70);
+                Vertex v51(51,66,69,71), v52(52,67,69), v53(53,70,72), v54(54,71,72);
 
-                Hex h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19;
+                Hex h1(1,2,3,4,5,6), h2(3,5,7,8,9,10);
+                Hex h3(4,6,11,12,13,14), h4(8,9,15,16,17,18);
+                Hex h5(5,6,7,14,19,20), h6(12,13,21,22,23,24);
+                Hex h7(7,8,18,19,25,26), h8(13,14,20,24,27,28);
+                Hex h9(17,18,25,29,30,31), h10(19,20,26,27,32,33);
+                Hex h11(23,24,28,34,36,35), h12(25,26,31,32,37,38);
+                Hex h13(27,28,33,35,39,40), h14(30,31,37,41,42,43);
+                Hex h15(32,33,38,39,44,45), h16(35,36,40,46,47,48);
+                Hex h17(37,38,43,44,49,50), h18(39,40,45,46,51,52);
+                Hex h19(44,45,50,51,53,54);
 
                 hexa.push_back(h1), hexa.push_back(h2), hexa.push_back(h3), hexa.push_back(h4), hexa.push_back(h5);
                 hexa.push_back(h6), hexa.push_back(h7), hexa.push_back(h8), hexa.push_back(h9), hexa.push_back(h10);
                 hexa.push_back(h11), hexa.push_back(h12), hexa.push_back(h13), hexa.push_back(h14), hexa.push_back(h15);
                 hexa.push_back(h16), hexa.push_back(h17), hexa.push_back(h18), hexa.push_back(h19);
-
-                h1.buildHex(v1,v2,v3,v4,v5,v6), h2.buildHex(v3,v5,v7,v8,v9,v10);
-                h3.buildHex(v4,v6,v11,v12,v13,v14), h4.buildHex(v8,v9,v15,v16,v17,v18);
-                h5.buildHex(v5,v6,v7,v14,v19,v20), h6.buildHex(v12,v13,v21,v22,v23,v24);
-                h7.buildHex(v7,v8,v18,v19,v25,v26), h8.buildHex(v13,v14,v20,v24,v27,v28);
-                h9.buildHex(v17,v18,v25,v29,v30,v31), h10.buildHex(v19,v20,v26,v27,v32,v33);
-                h11.buildHex(v23,v24,v28,v34,v36,v35), h12.buildHex(v25,v26,v31,v32,v37,v38);
-                h13.buildHex(v27,v28,v33,v35,v39,v40), h14.buildHex(v30,v31,v37,v41,v42,v43);
-                h15.buildHex(v32,v33,v38,v39,v44,v45), h16.buildHex(v35,v36,v40,v46,v47,v48);
-                h17.buildHex(v37,v38,v43,v44,v49,v50), h18.buildHex(v39,v40,v45,v46,v51,v52);
-                h19.buildHex(v44,v45,v50,v51,v53,v54);
-
-                v1.buildVer1(h1);
-                v2.buildVer1(h1);
-                v3.buildVer2(h1,h2);
-                v4.buildVer2(h1,h3);
-                v5.buildVer3(h1,h2,h5);
-                v6.buildVer3(h1,h3,h5);
-                v7.buildVer3(h2,h5,h7);
-                v8.buildVer3(h2,h4,h7);
-                v9.buildVer2(h2,h4);
-                v10.buildVer1(h2);
-                v11.buildVer1(h3);
-                v12.buildVer2(h3,h6);
-                v13.buildVer3(h3,h6,h8);
-                v14.buildVer3(h3,h5,h8);
-                v15.buildVer1(h4);
-                v16.buildVer1(h4);
-                v17.buildVer2(h4,h9);
-                v18.buildVer3(h4,h7,h9);
-                v19.buildVer3(h5,h7,h10);
-                v20.buildVer3(h5,h8,h10);
-                v21.buildVer1(h6);
-                v22.buildVer1(h6);
-                v23.buildVer2(h6,h11);
-                v24.buildVer3(h6,h8,h11);
-                v25.buildVer3(h7,h9,h12);
-                v26.buildVer3(h7,h10,h12);
-                v27.buildVer3(h8,h10,h13);
-                v28.buildVer3(h8,h11,h13);
-                v29.buildVer1(h9);
-                v30.buildVer2(h9,h14);
-                v31.buildVer3(h9,h12,h14);
-                v32.buildVer3(h10,h12,h15);
-                v33.buildVer3(h10,h13,h15);
-                v34.buildVer1(h11);
-                v35.buildVer3(h11,h13,h16);
-                v36.buildVer2(h11,h16);
-                v37.buildVer3(h12,h14,h17);
-                v38.buildVer3(h12,h15,h17);
-                v39.buildVer3(h13,h15,h18);
-                v40.buildVer3(h13,h16,h18);
-                v41.buildVer1(h14);
-                v42.buildVer1(h14);
-                v43.buildVer2(h14,h17);
-                v44.buildVer3(h15,h17,h19);
-                v45.buildVer3(h15,h18,h19);
-                v46.buildVer2(h16,h18);
-                v47.buildVer1(h16);
-                v48.buildVer1(h16);
-                v49.buildVer1(h17);
-                v50.buildVer2(h17,h19);
-                v51.buildVer2(h18,h19);
-                v52.buildVer1(h18);
-                v53.buildVer1(h19);
-                v54.buildVer1(h19);
 
                 Road r1 {v1, v2}; roads.push_back(r1);
                 Road r2 {v1, v3}; roads.push_back(r2);
@@ -193,9 +144,24 @@ namespace noa{
                 Road r70 {v50,v53}; roads.push_back(r70);
                 Road r71 {v51,v54}; roads.push_back(r71);
                 Road r72 {v53,v54}; roads.push_back(r72);
+
+                ver.push_back(v1), ver.push_back(v2), ver.push_back(v3), ver.push_back(v4), ver.push_back(v5);
+                ver.push_back(v6), ver.push_back(v7), ver.push_back(v8), ver.push_back(v9), ver.push_back(v10);
+                ver.push_back(v11), ver.push_back(v12), ver.push_back(v13), ver.push_back(v14), ver.push_back(v15);
+                ver.push_back(v16), ver.push_back(v17), ver.push_back(v18), ver.push_back(v19), ver.push_back(v20);
+                ver.push_back(v21), ver.push_back(v22), ver.push_back(v23), ver.push_back(v24), ver.push_back(v25);
+                ver.push_back(v26), ver.push_back(v27), ver.push_back(v28), ver.push_back(v29), ver.push_back(v30);
+                ver.push_back(v31), ver.push_back(v32), ver.push_back(v33), ver.push_back(v34), ver.push_back(v35);
+                ver.push_back(v36), ver.push_back(v37), ver.push_back(v38), ver.push_back(v39), ver.push_back(v40);
+                ver.push_back(v41), ver.push_back(v42), ver.push_back(v43), ver.push_back(v44), ver.push_back(v45);
+                ver.push_back(v46), ver.push_back(v47), ver.push_back(v48), ver.push_back(v49), ver.push_back(v50);
+                ver.push_back(v51), ver.push_back(v52), ver.push_back(v53), ver.push_back(v54);
                             
-                
             }
-};
+
+            ~Board(){}
+
+    };
+
     
 }

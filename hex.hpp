@@ -5,7 +5,8 @@ Email: noa.fishman@gmail.com
 #include <iostream>
 #include <stdexcept>
 #include <vector>
-#include "vertex.hpp"
+#include "road.hpp"
+
 using namespace std;
 
 namespace noa{
@@ -13,41 +14,26 @@ namespace noa{
     class Hex{
 
         int num;
-        string resource;
-        vector<Vertex> vextexes;
+        string resource = " ";
+        vector<int> vertexes;
 
         public:
 
-            Hex(){
+            Hex(int v1, int v2, int v3, int v4, int v5, int v6){
                 num =0;
+                this->vertexes = {v1,v2,v3,v4,v5,v6};  // Clear existing elements to avoid accumulation
             }
 
-            Hex(string typ, int value){
-                num = value;
-                resource = typ;
+            Hex(const Hex& other){
+                num = other.num;
+                resource = other.resource;
+                vertexes = {other.vertexes[0], other.vertexes[1], other.vertexes[2], other.vertexes[3], other.vertexes[4], other.vertexes[5]};
             }
 
-            int getNum(){
-                return num;
-            }
-
-            string getPlace(){
-                return resource;
-            }
-
-            void setHex(string typ, int value){
-                num = value;
-                resource = typ;
-            }
-
-            void buildHex(Vertex& v1, Vertex& v2, Vertex& v3, Vertex& v4, Vertex& v5, Vertex& v6){
-                vextexes.push_back(v1);
-                vextexes.push_back(v2);
-                vextexes.push_back(v3);
-                vextexes.push_back(v4);
-                vextexes.push_back(v5);
-                vextexes.push_back(v6);
-            }
+            int getNum();
+            string getPlace();
+            void setHex(string typ, int value);
+            vector<int>& getCards();
     };
 
     
