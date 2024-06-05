@@ -14,6 +14,15 @@ namespace noa{
         return num;
     }
 
+    string Hex::getNumString(){
+        if(num < 10){
+            return " "+to_string(num);
+        }
+        else{
+            return to_string(num);
+        }
+    }
+
     string Hex::getPlace(){
         return resource;
     }

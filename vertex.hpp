@@ -48,16 +48,16 @@ namespace noa{
                 num = other.num;
                 p = other.p;
                 roads = other.roads;
+
             }
 
             ~Vertex(){
                 delete p;
             }
             Vertex& operator=(const Vertex& other) {
-                
-                if (this==&other)
+                if (this == &other){
                     return *this;
-               
+                }
                 num = other.num;
                 build = other.build;
                 owner = other.owner;
@@ -74,6 +74,7 @@ namespace noa{
             // void setRoads(int r1, int r2, int r3);
             // void setRoads2(int r1, int r2);
             vector<int>& gerRoads();
+            string getVer();
             
                         
     };

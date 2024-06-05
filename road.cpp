@@ -46,4 +46,20 @@ namespace noa{
         return numV1;
     }
 
+    string Road::getRoad(){
+        if(!path){
+            return typ;
+        }
+        if(owner == 0){
+            return "\033[1;31m"+typ+"\033[0m";
+        }
+        else if(owner == 1){
+            return "\033[1;33m"+typ+"\033[0m";
+        }
+        else if(owner == 2){
+            return "\033[1;34m"+typ+"\033[0m";
+        }
+        return typ;
+    }
+
 }

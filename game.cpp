@@ -13,7 +13,6 @@ using namespace noa;
 int main()
 {
     string name1= "";
-    
     cout << "welcome to the catan game, lets get started..." << endl;
     cout << "please enter the names of the 3 players: " << endl;
     // get the names from the user and create 3 players with the names i got
@@ -58,7 +57,7 @@ int main()
         cin >> verNum2;
         catan.placeRoad(verNum, verNum2, n);
 
-        cout << catan.getPlayerName(n) <<" choose where you want your seconde settlement" << endl;
+        cout << catan.getPlayerName(n) <<" choose where you want your second settlement" << endl;
         int verNumNew;
         cin >> verNumNew;
         catan.placeSettelemntFirst(verNumNew, n);
@@ -72,19 +71,34 @@ int main()
     catan.pointStutus();
     cout << endl;
 
-    cout << "this is the map of the action you can preform in you'r turn:"<<endl;
+    system("gnome-terminal -- bash -c 'cat mypipe; exec bash'");
+    std::ofstream pipe("mypipe");
     
-    cout << "0 - to finish your turn"<< endl;
-    cout << "1 - new road"<< endl;
-    cout << "2 - new settelment"<< endl;
-    cout << "3 - upgrade settelment to city"<< endl;
-    cout << "4 - buy development card"<< endl;
-    cout << "5 - use development card"<< endl;
-    cout << "6 - cange 4 to 1"<< endl;
-    cout << "7 - use you'r port"<< endl;
-    cout << "8 - switch cards with another player"<< endl;
-    cout << "9 - print the points status"<< endl;
-    cout << "10 - print the cards status"<< endl;
+    if (pipe.is_open()) {
+
+        pipe << "this is the map of the action you can preform in you'r turn:"<< endl << endl;
+        
+        pipe << "0 - to finish your turn"<< endl;
+        pipe << "1 - new road"<< endl;
+        pipe << "2 - new settelment"<< endl;
+        pipe << "3 - upgrade settelment to city"<< endl;
+        pipe << "4 - buy development card"<< endl;
+        pipe << "5 - use development card"<< endl;
+        pipe << "6 - cange 4 to 1"<< endl;
+        pipe << "7 - use you'r port"<< endl;
+        pipe << "8 - switch cards with another player"<< endl;
+        pipe << "9 - print the points status"<< endl;
+        pipe << "10 - print the cards status"<< endl << endl;
+
+        pipe << "Building Cost:"<< endl <<endl;
+        pipe << "Road-             🧱🪵"<< endl;
+        pipe << "Settelment-       🧱🪵🌾🐑" << endl;
+        pipe << "City-             🌾🌾🪨🪨🪨" << endl;
+        pipe << "Development Card- 🌾🐑🪨" << endl;
+
+        pipe.close();
+        
+    }
 
     
     // print update map ??? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

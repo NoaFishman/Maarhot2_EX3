@@ -15,6 +15,7 @@ namespace noa{
 
         vector<Player> players;
         Board board;
+        vector<int> developmentCards;// represent the stack of development card
 
         public:
 
@@ -23,7 +24,8 @@ namespace noa{
                 players.push_back(new_p2);
                 players.push_back(new_p3);
                 board.biuldBoard();
-                board.printBoard();
+                board.boardStutus();
+                developmentCards = {5,4,2,2,2}; // 0-nghit, 1-V point, 2-bless year, 3-build 2 road, 4-monopol 
             }
 
             ~Catan(){}
@@ -40,6 +42,10 @@ namespace noa{
             void cardStutus();
             void pointStutus();
             void turn(int n);
+            int getDevCard();
+            void useDevCard(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, bool* blessYear);
+            void turnChoise(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, bool* blessYear);
+            void rollDice(int n);
     };
     
 }

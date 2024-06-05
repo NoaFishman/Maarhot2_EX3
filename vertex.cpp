@@ -57,16 +57,64 @@ namespace noa{
         return num;
     }
 
-    // void Vertex::setRoads(int r1, int r2, int r3){
-    //     roads = {r1, r2, r3};
-    // }
+    string Vertex::getVer(){
+        if(owner == 0){
+            if(build == 0){
+                if(num < 10){
+                    return " "+to_string(num);
+                }
+                else{
+                    return to_string(num);
+                }
+            }
+            else if(build == 1){
+                return "\033[1;31m◯ \033[0m";
 
-    // void Vertex::setRoads2(int r1, int r2){
-    //     roads = {r1, r2};
-    // }
+            }
+            else if(build == 2){
+                return "\033[31m⬤ \033[0m";
+            }
+        }
+        else if(owner == 1){
+            if(build == 0){
+                if(num < 10){
+                    return " "+to_string(num);
+                }
+                else{
+                    return to_string(num);
+                }
+            }
+            else if(build == 1){
+                return "\033[1;33m◯ \033[0m";
+
+            }
+            else if(build == 2){
+                return "\033[33m⬤ \033[0m";
+            }
+
+        }
+        else if(owner == 2){
+            if(build == 0){
+                if(num < 10){
+                    return " "+to_string(num);
+                }
+                else{
+                    return to_string(num);
+                }
+            }
+            else if(build == 1){
+                return "\033[1;34m◯ \033[0m";
+            }
+            else if(build == 2){
+                return "\033[34m⬤ \033[0m";
+
+            }
+
+        }
+        return "";
+    }
 
     vector<int>& Vertex::gerRoads(){
-        //cout << roads[0] << roads[1] << endl;
         return roads;
     }
                 

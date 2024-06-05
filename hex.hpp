@@ -34,6 +34,7 @@ namespace noa{
             string getPlace();
             void setHex(string typ, int value);
             vector<int>& getCards();
+            string getNumString();
     };
 
     

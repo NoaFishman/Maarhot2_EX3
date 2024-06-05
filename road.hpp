@@ -19,16 +19,18 @@ namespace noa{
         int numV2;
         bool path;
         int owner; 
+        string typ;
 
         public:
 
-            Road(Vertex& nv1, Vertex& nv2){
+            Road(Vertex& nv1, Vertex& nv2, string t){
                 v1 = nv1;
                 v2 = nv2;
                 numV1 = nv1.getNum();
                 numV2 = nv2.getNum();
                 path  = false;
                 owner = 3;
+                typ = t;
             }
 
             bool isThisRoad(Vertex& nv1, Vertex& nv2);
@@ -36,6 +38,7 @@ namespace noa{
             void setRoad(int owmer1);
             int getOwner();
             int getTheOtherVer(int vorg);
+            string getRoad();
 
     };
 }
