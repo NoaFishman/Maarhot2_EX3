@@ -16,9 +16,25 @@ OBJS = $(SRCS:.cpp=.o)
 # Executable files
 CATAN = game
 TEST = Test
+DEMO = Demo
 
 # Targets
-all: $(CATAN) $(TEST)
+all: $(CATAN) $(TEST) $(DEMO)
+
+Catan: $(CATAN)
+
+test_target: $(TEST)
+
+demo_target: $(DEMO)
+
+catan: Catan
+	./$(CATAN)
+
+test: test_target
+	./$(TEST)
+
+demo: demo_target
+	./$(DEMO)
 
 $(CATAN): $(OBJS)
 	$(CC) $(CFLAGS) $^ -o $@
@@ -26,8 +42,10 @@ $(CATAN): $(OBJS)
 $(TEST): TestCounter.o Test.o board.o catan.o hex.o player.o road.o vertex.o
 	$(CC) $(CFLAGS) $^ -o $@
 
-# Rule to compile .cpp files to .o files
+$(DEMO): Demo.o board.o catan.o hex.o player.o road.o vertex.o
+	$(CC) $(CFLAGS) $^ -o $@
 
+# Rule to compile .cpp files to .o files
 %.o: %.cpp %.hpp
 	$(CC) $(CFLAGS) -c $< -o $@
 

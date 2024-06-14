@@ -90,3 +90,155 @@ TEST_CASE("Choosing starting player"){
     CHECK(counter[12] >= 2);
 }
 
+TEST_CASE("road"){
+    Player p1("noa");
+    Player p2("omer");
+    Board board;
+    board.biuldBoardDemo();
+    // first settelment
+    board.canBuildSettelFirst(8, 1, &p1);
+    board.canBuildSettelFirst(6, 2, &p2);
+    Vertex* v8 = &board.getVer(8);
+    Vertex* v7 = &board.getVer(7);
+    Vertex* v5 = &board.getVer(5);
+    Vertex* v6 = &board.getVer(6);
+    bool flag = false;
+    // there is no settelment or city in this road vertex
+    if(board.canBuildRoad(*v5, *v7, 1) && board.newRoad(*v5, *v7,1)){
+        flag = true;
+    }
+    CHECK(flag == false);
+    flag = false;
+    // this road isn't next to your settelment
+    if(board.canBuildRoad(*v5, *v6, 1) && board.newRoad(*v5, *v6,1)){
+        flag = true;
+    }
+    CHECK(flag == false);
+    flag = false;
+    // this road is good
+    if(board.canBuildRoad(*v8, *v7, 1) && board.newRoad(*v8, *v7,1)){
+        flag = true;
+    }
+    CHECK(flag == true);
+    flag = false;
+    // road next to other road
+    if(board.canBuildRoad(*v5, *v7, 1) && board.newRoad(*v5, *v7,1)){
+        flag = true;
+    }
+    CHECK(flag == true);
+    flag = false;
+    // road on other player road wont work
+    if(board.canBuildRoad(*v5, *v7, 2) && board.newRoad(*v5, *v7,2)){
+        flag = true;
+    }
+    CHECK(flag == false);
+    flag = false;
+}
+
+TEST_CASE("city"){
+   Board b;
+   b.biuldBoardDemo();
+   Player p1("noa");
+   Player p2("omer");
+   Vertex* v8 = &b.getVer(8);
+   Vertex* v7 = &b.getVer(7);
+   Vertex* v6 = &b.getVer(6);
+   b.canBuildSettelFirst(8, 1, &p1);
+   b.canBuildSettelFirst(6, 1, &p2);
+   // should be false there is no settelment in this vertex
+   CHECK(v7->newCity(&p1) == false);
+   // should be false p1 isn't the owner
+   CHECK(v6->newCity(&p1) == false);
+   // should be true
+   CHECK(v8->newCity(&p1) == true);
+}
+
+TEST_CASE("buing + 4 to 1"){
+    // all the action that player can do with his cards
+   // 0 = 🪨Mountains, 1 = 🧱Hills, 2 = 🌾Fields, 3 = 🪵Forest, 4 = 🐑Pasture
+   Player p1("noa");
+   Player p2("omer");
+   p1.getCards(2, "🧱");
+   p1.getCards(2, "🪵");
+   p1.getCards(3, "🌾");
+   p1.getCards(3, "🪨");
+   p1.getCards(1, "🐑"); 
+   p2.getCards(1, "🧱");
+   p2.getCards(2, "🪵");
+   p2.getCards(1, "🌾");
+   p2.getCards(3, "🪨");
+   // BUY THINGS IF THE PLAYER HAVE OR NOT HAVING THE RESOURCE CARDS
+   CHECK(p2.canSettel() == false);
+   CHECK(p1.canSettel() == true);
+   p1.buySettelment();
+   p1.placeSettelemnt();
+   CHECK(p2.canRoad() == true);
+   p2.buyRoad();
+   CHECK(p2.canCity() == false);
+   CHECK(p1.canCity() == true);
+   p1.buyCity();
+   CHECK(p2.canDevelopCard() == false);
+   p2.getCards(1, "🐑");
+   CHECK(p2.canDevelopCard() == true);
+   // switch 4 to one cards
+   Player p3("roni");
+   p3.getCards(4,"🐑");
+   p3.getCards(1,"🪵");
+   CHECK(p3.canRoad() == false);
+   p3.fourToOne(4, 1);
+   CHECK(p3.canRoad() == true);
+}
+
+TEST_CASE("development cards"){
+    // for each dev card call the function to use it (sending vector of all the inputs) and see that it is really happened
+    vector<int> input;
+    vector<string>inputString;
+    Player p1("noa");
+    Player p2("omer");
+    Player p3("roni");
+    p2.getCards(3, "🧱");
+    p3.getCards(3, "🧱");
+    
+    p1.getDevCard(0);
+    p1.getDevCard(1);
+    p1.getDevCard(2);
+    p1.getDevCard(3);
+    p1.getDevCard(4);
+    Catan catan{p1, p2, p3, true};
+    cout << "night - 0, year bless - 2, build two roads - 3, monopol - 4" << endl;
+    inputString = {"omer"};
+    input = {0, 1};
+    // nghit
+    bool flag = false;
+    catan.useDevCardTest(0,0,0,0,0,&flag,input,inputString);
+    CHECK(catan.getPlayer(0).haveCard(0) == false);
+    //bless year
+    int bless1 = 0;
+    int bless2 = 0;
+    int amountB1 = 0;
+    int amountB2 = 0;
+    input = {2, 2, 4 };
+    catan.useDevCardTest(0,&bless1,&bless2,&amountB1,&amountB2,&flag,input,inputString);
+    CHECK(catan.getPlayer(0).haveCard(2) == false);
+    //2 roads
+    catan.placeSettelemntFirst(8, 0);
+    input = {3, 8,7,5,7};
+    catan.useDevCardTest(0,&bless1,&bless2,&amountB1,&amountB2,&flag,input,inputString);
+    CHECK(catan.getPlayer(0).haveCard(3) == false);
+    //monopol
+    input = {4, 2};
+    catan.useDevCardTest(0,&bless1,&bless2,&amountB1,&amountB2,&flag,input,inputString);
+    CHECK(catan.getPlayer(0).haveCard(4) == false);
+}
+
+TEST_CASE("points"){
+    // for al the ptions to get point check if the player really get them
+    Player p1("noa");
+    Player p2("omer");
+    p1.placeSettelemnt();
+    CHECK(p1.getPoints() == 1);
+    p1.buyCity();
+    CHECK(p1.getPoints() == 2);
+    p1.getDevCard(1);
+    CHECK(p1.getPoints() == 3);
+}

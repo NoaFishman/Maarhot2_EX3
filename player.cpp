@@ -177,7 +177,7 @@ namespace noa{
         --devCards[x];
         if(x == 0 && devCards[0] == 2){
             points -= 2;
-            cout << "you don't have the biggest army anymor" << endl;
+            cout << "you don't have the biggest army anymore" << endl;
         }
     }
 

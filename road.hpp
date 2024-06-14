@@ -25,7 +25,7 @@ namespace noa{
 
             Road(Vertex& nv1, Vertex& nv2, string t){
                 v1 = nv1;
-                v2 = nv1;
+                v2 = nv2;
                 numV1 = nv1.getNum();
                 numV2 = nv2.getNum();
                 path  = false;

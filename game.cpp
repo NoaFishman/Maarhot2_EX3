@@ -78,7 +78,7 @@ int main()
 
         pipe << "this is the map of the action you can preform in you'r turn:"<< endl << endl;
         
-        pipe << "0 - to finish your turn"<< endl;
+        pipe << "0 - finish your turn"<< endl;
         pipe << "1 - new road"<< endl;
         pipe << "2 - new settelment"<< endl;
         pipe << "3 - upgrade settelment to city"<< endl;
@@ -88,7 +88,7 @@ int main()
         pipe << "7 - show the board status"<< endl;
         pipe << "8 - switch cards with another player"<< endl;
         pipe << "9 - print the points status"<< endl;
-        pipe << "10 - print the cards status"<< endl << endl;
+        pipe << "10- print the cards status"<< endl << endl;
 
         pipe << "Building Cost:"<< endl <<endl;
         pipe << "Road-             🧱🪵"<< endl;
@@ -100,8 +100,6 @@ int main()
         
     }
 
-    
-    // print update map ??? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     while(!catan.isWinner()){
         catan.turn(org);
         org = (org + 1) % 3;

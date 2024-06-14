@@ -42,7 +42,7 @@ namespace noa{
             //~Catan(){}
 
             int ChooseStartingPlayer();
-            Board& getBoard();
+            Board getBoard();
             bool isWinner();
             void placeSettelemntFirst(int verNum, int n);
             void placeSettelemnt(int verNum, int n);
@@ -57,6 +57,8 @@ namespace noa{
             void useDevCard(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, bool* blessYear);
             void turnChoise(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, bool* blessYear);
             void rollDice(int n);
+            Player getPlayer(int n);
+            void useDevCardTest(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, bool* blessYear, vector<int> input, vector<string> inputString);
     };
     
 }

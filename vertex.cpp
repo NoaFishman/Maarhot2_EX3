@@ -36,13 +36,11 @@ namespace noa{
     bool Vertex::newCity(Player* pNew){
 
         if(build == 1 && pNew == p){
-            delete pNew;
             build = 2;
             return true;
         }
         else{
             cout << "this spote is taken please choose diffrent one" << endl;
-            delete pNew;
             return false;
         }
     }

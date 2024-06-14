@@ -19,8 +19,8 @@ namespace noa{
         return randomNumber;
     }
     
-    Board& Catan::getBoard(){
-        return this-> board;
+    Board Catan::getBoard(){
+        return board;
     }
 
     bool Catan::isWinner(){
@@ -80,6 +80,10 @@ namespace noa{
         return x;
     }
 
+    Player Catan::getPlayer(int n){
+        return players[n];
+    }
+
     void Catan::placeCity(int verNum, int n){
         Vertex& curr_ver = board.getVer(verNum);
         Player* p = &players[n];
@@ -95,20 +99,6 @@ namespace noa{
 
     void Catan::placeRoad(int verNum, int verNum2, int n){
         
-        // Vertex& curr_ver1 = board.getVer(verNum);
-        // Vertex& curr_ver2 = board.getVer(verNum2);
-        // while( (!board.canBuildRoad(curr_ver1, curr_ver2, n)) || (!board.newRoad(curr_ver1, curr_ver2, n))){
-        //     cout << "curr_ver1 num: " << curr_ver1.getNum() << " curr_ver2 num: " << curr_ver2.getNum() << endl;
-        //     cout << "choose 2 ver agin"<< endl;
-        //     int newVer;
-        //     cin >> newVer;
-        //     int xx;
-        //     cin >> xx;
-        //     curr_ver1 = board.getVer(xx);
-        //     curr_ver2 = board.getVer(newVer);
-            
-        // }
-
         Vertex* curr_ver1 = &board.getVer(verNum);
         Vertex* curr_ver2 = &board.getVer(verNum2);
 
@@ -433,6 +423,96 @@ namespace noa{
                 }
             }
         }
+
+    }
+
+    void Catan::useDevCardTest(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, bool* blessYear, vector<int> input, vector<string> inputString){
+        int j =0;
+        int is = 0;
+        cout << "wich develop card do you want to use?" << endl;
+        cout << "night - 0, year bless - 2, build two roads - 3, monopol - 4" << endl;
+        int x = input[j];
+        j++;
+        if(players[n].haveCard(x)){
+            switch(x){
+                case 0:{
+                    cardStutus();
+                    cout << "choose who you want to steal resorce from" << endl;
+                    string name = inputString[is];
+                    is++;
+                    int other;
+                    bool flag = false;
+                    for(int i=0; i<3; i++){
+                        string name2 = players[i].getName();
+                        if(name2.compare(name) == 0){
+                            other = i;
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if(!flag){
+                        cout << "sorry you chose the wrong name" << endl;
+                        break;
+                    }
+                    cout << endl << "choose the resorce you want to take" << endl;
+                    cout << "🪨 -0,  🧱 -1 ,  🌾-2,  🪵 -3,  🐑 -4" << endl;
+                    int what = input[j];
+                    j++;
+                    players[n].addResoCard(1, what);
+                    players[other].throwCards(what, 1);
+                    players[n].useDevCard(x);
+                    break;
+                }
+                case 2:{
+                    *blessYear = true;
+                    cout << "choose 2 resorces, and you have to use them in this turn" << endl;
+                    cout << "🪨 -0,  🧱 -1 ,  🌾-2,  🪵 -3,  🐑 -4" << endl;
+                    *bless1 = input[j];
+                    j++;
+                    *bless2 = input[j];
+                    j++;
+                    int b1 = *bless1;
+                    int b2 = *bless2;
+                    *amountB1 = players[n].getResorceAmont(b1);
+                    *amountB2 = players[n].getResorceAmont(b2);
+                    players[n].addResoCard(1, b1);
+                    players[n].addResoCard(1, b2);
+                    players[n].useDevCard(x);
+                    break;
+                }
+                case 3:{
+                    cout << "choose where to place the first road" << endl;
+                    int v1 = input[j];
+                    j++;
+                    int v2 = input[j];
+                    j++;
+                    placeRoad(v1, v2, n);
+                    cout << "choose where to place the seconde road" << endl;
+                    v1 = input[j],
+                    j++;
+                    v2 = input[j];
+                    j++;
+                    placeRoad(v1, v2, n);
+                    players[n].useDevCard(x);
+                    break;
+                }
+                case 4:{
+                    cardStutus();
+                    cout << endl << "choose the resorce you want to take from every one" << endl;
+                    cout << "🪨 -0,  🧱 -1 ,  🌾-2,  🪵 -3,  🐑 -4" << endl;
+                    int reso = input[j];
+                    j++;
+                    int sum=0;
+                    for(int i=0; i<3; i++){
+                        sum = sum + players[i].takeYourResorce(reso);
+                    }
+                    players[n].addResoCard(sum, reso);
+                    players[n].useDevCard(x);
+                    break;
+                }
+            }
+        }
+        players[n].printDevCards();
     }
 
 }
