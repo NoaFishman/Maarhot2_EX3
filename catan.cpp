@@ -10,9 +10,10 @@ using namespace std;
 
 namespace noa{
 
+    RandomInitializer randomInitializer;
+
     // choose randomly how is starting
     int Catan::ChooseStartingPlayer(){
-        srand(time(0));
         int randomNumber = std::rand() % 3;
         cout << players[randomNumber].getName() << " is the starting player" << endl;
         return randomNumber;

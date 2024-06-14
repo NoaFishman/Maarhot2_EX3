@@ -5,11 +5,16 @@ Email: noa.fishman@gmail.com
 #include <iostream>
 #include <stdexcept>
 #include <vector>
-//#include "player.hpp"
 #include "board.hpp"
 using namespace std;
 
 namespace noa{
+
+    struct RandomInitializer{
+        RandomInitializer(){
+            std::srand(static_cast<unsigned int>(std::time(0)));
+        }
+    };
 
     class Catan{
 
@@ -24,6 +29,18 @@ namespace noa{
                 players.push_back(new_p2);
                 players.push_back(new_p3);
                 board.biuldBoard();
+                board.boardStutus();
+                developmentCards = {5,4,2,2,2}; // 0-nghit, 1-V point, 2-bless year, 3-build 2 road, 4-monopol 
+            }
+
+            Catan(Player& new_p1, Player& new_p2, Player& new_p3, bool demo){
+                if(demo){
+                    board.biuldBoardDemo();
+                }
+                players.push_back(new_p1);
+                players.push_back(new_p2);
+                players.push_back(new_p3);
+                
                 board.boardStutus();
                 developmentCards = {5,4,2,2,2}; // 0-nghit, 1-V point, 2-bless year, 3-build 2 road, 4-monopol 
             }

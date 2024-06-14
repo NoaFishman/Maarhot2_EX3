@@ -41,6 +41,28 @@ namespace noa{
         }
     }
 
+    void Board:: biuldBoardDemo(){
+        hexa[0].setHex("🪨", 10);
+        hexa[1].setHex("🌾", 12);
+        hexa[2].setHex("🐑", 2);
+        hexa[3].setHex("🌾", 9);
+        hexa[4].setHex("🧱", 6);
+        hexa[5].setHex("🪵", 9);
+        hexa[6].setHex("🪵", 11);
+        hexa[7].setHex("🐑", 4);
+        hexa[8].setHex("🪵", 8);
+        hexa[9].setHex("0", 0);
+        hexa[10].setHex("🧱", 10);
+        hexa[11].setHex("🪨", 3);
+        hexa[12].setHex("🪵", 3);
+        hexa[13].setHex("🧱", 5);
+        hexa[14].setHex("🌾", 4);
+        hexa[15].setHex("🪨", 8);
+        hexa[16].setHex("🌾", 6);
+        hexa[17].setHex("🐑", 5);
+        hexa[18].setHex("🐑", 11);
+    }
+
     // return the vertex the player chose
     Vertex& Board::getVer(int verNum){
         return ver[verNum-1];

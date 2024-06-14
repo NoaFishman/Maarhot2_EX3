@@ -15,16 +15,16 @@ OBJS = $(SRCS:.cpp=.o)
 
 # Executable files
 CATAN = game
-#TEST = Test
+TEST = Test
 
 # Targets
-all: $(CATAN)
+all: $(CATAN) $(TEST)
 
 $(CATAN): $(OBJS)
 	$(CC) $(CFLAGS) $^ -o $@
 
-#$(TEST): TestCounter.o Test.o Graph.o Algorithms.o
-#	$(CC) $(CFLAGS) $^ -o $@
+$(TEST): TestCounter.o Test.o board.o catan.o hex.o player.o road.o vertex.o
+	$(CC) $(CFLAGS) $^ -o $@
 
 # Rule to compile .cpp files to .o files
 
@@ -33,4 +33,4 @@ $(CATAN): $(OBJS)
 
 # Clean
 clean:
-	rm -f $(OBJS) $(CATAN)
+	rm -f $(OBJS) $(CATAN) $(TEST)

@@ -24,7 +24,8 @@ namespace noa{
         public:
 
             void biuldBoard();
-            void printBoard();
+            void biuldBoardDemo();
+            //void printBoard();
             Vertex& getVer(int verNum);
             bool newRoad(Vertex& v1, Vertex& v2, int n);
             Board getBoard(){
@@ -37,6 +38,12 @@ namespace noa{
             bool canBuildSettelFirst(int v, int n, Player* pNew);
             void printVer();// deleteeee!!!!!!!!!!!!!!
             void boardStutus();
+            vector<Hex>& getHex(){
+                return hexa;
+            } 
+            vector<Road>& getRoad(){
+                return roads;
+            }
 
             // constractor
             Board(){
