@@ -10,12 +10,6 @@ using namespace std;
 
 namespace noa{
 
-    struct RandomInitializer{
-        RandomInitializer(){
-            std::srand(static_cast<unsigned int>(std::time(0)));
-        }
-    };
-
     class Catan{
 
         vector<Player> players;
@@ -45,10 +39,10 @@ namespace noa{
                 developmentCards = {5,4,2,2,2}; // 0-nghit, 1-V point, 2-bless year, 3-build 2 road, 4-monopol 
             }
 
-            ~Catan(){}
+            //~Catan(){}
 
             int ChooseStartingPlayer();
-            Board getBoard();
+            Board& getBoard();
             bool isWinner();
             void placeSettelemntFirst(int verNum, int n);
             void placeSettelemnt(int verNum, int n);

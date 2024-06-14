@@ -4,6 +4,7 @@ Email: noa.fishman@gmail.com
 */
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest.h"
+#include "catch.hpp"
 using namespace doctest;
 
 const int MIN_TESTS = 20;

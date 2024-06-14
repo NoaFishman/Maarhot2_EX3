@@ -85,7 +85,7 @@ int main()
         pipe << "4 - buy development card"<< endl;
         pipe << "5 - use development card"<< endl;
         pipe << "6 - cange 4 to 1"<< endl;
-        pipe << "7 - use you'r port"<< endl;
+        pipe << "7 - show the board status"<< endl;
         pipe << "8 - switch cards with another player"<< endl;
         pipe << "9 - print the points status"<< endl;
         pipe << "10 - print the cards status"<< endl << endl;

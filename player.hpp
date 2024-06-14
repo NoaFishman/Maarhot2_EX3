@@ -11,6 +11,13 @@ using namespace std;
 
 namespace noa{
 
+    struct RandomInitializer{
+        RandomInitializer(){
+            std::srand(static_cast<unsigned int>(std::time(0)));
+        }
+    };
+
+
     class Player{
 
         string name = " ";
@@ -40,7 +47,7 @@ namespace noa{
             devCards = {0,0,0,0,0}; // represent how many cards the player have from each typ
         }
 
-        
+        //~Player(){}
         
         string getName();
 

@@ -25,13 +25,25 @@ namespace noa{
 
             Road(Vertex& nv1, Vertex& nv2, string t){
                 v1 = nv1;
-                v2 = nv2;
+                v2 = nv1;
                 numV1 = nv1.getNum();
                 numV2 = nv2.getNum();
                 path  = false;
                 owner = 3;
                 typ = t;
             }
+
+            Road(const Road& other){
+                v1 = other.v1;
+                v2 = other.v2;
+                numV1 = other.numV1;
+                numV2 = other.numV2;
+                path  = other.path;
+                owner = other.owner;
+                typ = other.typ;
+            }
+
+            //~Road(){}
 
             bool isThisRoad(Vertex& nv1, Vertex& nv2);
             bool isTaken();

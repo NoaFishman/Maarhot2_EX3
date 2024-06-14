@@ -29,6 +29,8 @@ namespace noa{
                 resource = other.resource;
                 vertexes = {other.vertexes[0], other.vertexes[1], other.vertexes[2], other.vertexes[3], other.vertexes[4], other.vertexes[5]};
             }
+            
+            //~Hex(){}
 
             int getNum();
             string getPlace();

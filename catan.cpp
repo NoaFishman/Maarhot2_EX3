@@ -19,7 +19,7 @@ namespace noa{
         return randomNumber;
     }
     
-    Board Catan::getBoard(){
+    Board& Catan::getBoard(){
         return this-> board;
     }
 

@@ -8,8 +8,9 @@ using namespace std;
 
 namespace noa{
 
+    //RandomInitializer randomInitializer;
+
     void Board:: biuldBoard(){
-        srand(time(0));
         vector<int> numbers = {0,0,1,2,2,2,2,0,2,2,2,2,1}; // th index is the number we need to place
         vector<int> resource = {3,3,4,4,4}; // 0 = Mountains, 1 = Hills, 2 = Fields, 3 = Forest, 4 = Pasture
         vector<string> places; 

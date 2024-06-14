@@ -51,9 +51,13 @@ namespace noa{
 
             }
 
-            ~Vertex(){
-                delete p;
-            }
+            // ~Vertex(){
+            //     if(p != nullptr){
+            //         free(p);
+            //     }
+                
+            // }
+            
             Vertex& operator=(const Vertex& other) {
                 if (this == &other){
                     return *this;

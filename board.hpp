@@ -8,9 +8,8 @@ Email: noa.fishman@gmail.com
 #include <iomanip>
 #include <fstream>
 #include <cstdlib>
-//#include "vertex.hpp"
 #include "hex.hpp"
-//#include "road.hpp"
+
 using namespace std;
 
 namespace noa{
@@ -28,9 +27,6 @@ namespace noa{
             //void printBoard();
             Vertex& getVer(int verNum);
             bool newRoad(Vertex& v1, Vertex& v2, int n);
-            Board getBoard(){
-                return *this;
-            }
             void getCardsStart();
             void getCards(int d);
             bool canBuildRoad(Vertex& v1, Vertex& v2, int n);
@@ -163,7 +159,7 @@ namespace noa{
                             
             }
 
-            ~Board(){}
+            //~Board() = default;
 
     };
 
