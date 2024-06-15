@@ -70,6 +70,14 @@ namespace noa{
 
     }
 
+    void Catan::fourToOne(int n, int from, int to){
+        players[n].fourToOne(from, to);
+    }
+
+    void Catan::buyRoad(int n){
+        players[n].buyRoad();
+    }
+
     int Catan::getDevCard(){
         srand(time(0));
         int x = rand()%5;

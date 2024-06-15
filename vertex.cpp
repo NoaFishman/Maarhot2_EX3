@@ -46,7 +46,7 @@ namespace noa{
     }
 
     int Vertex::getOwner(){
-        return this->owner;
+        return owner;
     }
 
     void Vertex::getCards(string resource){

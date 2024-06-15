@@ -58,6 +58,8 @@ namespace noa{
             void turnChoise(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, bool* blessYear);
             void rollDice(int n);
             Player getPlayer(int n);
+            void fourToOne(int n, int from, int to);
+            void buyRoad(int n);
             void useDevCardTest(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, bool* blessYear, vector<int> input, vector<string> inputString);
     };
     
