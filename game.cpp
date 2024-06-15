@@ -1,6 +1,6 @@
-/**
- * the main file for the game
- *
+/*
+ * ID: 319055430
+ * Email: noa.fishman@gmail.com
  */
 #include <iostream>
 #include <stdexcept>
@@ -10,6 +10,7 @@
 using namespace std;
 using namespace noa;
 
+// the main file for the game
 int main()
 {
     string name1= "";
@@ -31,6 +32,7 @@ int main()
 
     int org = n;
 
+    // first rount each player choose where to put his first settelment and then his second road
     for(int i=0; i<3; i++){
 
         cout << catan.getPlayerName(n) <<" choose where you want your first settlement" << endl;
@@ -45,7 +47,7 @@ int main()
         n = (n + 1) %3;
     }
 
-
+    // second round from the last player to the first choosing where to put the second road and then the second settelment
     for(int i=0; i<3; i++){
 
         n = ((n - 1 + 3) % 3);
@@ -63,7 +65,8 @@ int main()
         catan.placeSettelemntFirst(verNumNew, n);
 
     }
-    
+
+    // update all the player resource cards and the the points and card status
     catan.getCards();
     cout << endl;
     catan.cardStutus();
@@ -71,11 +74,13 @@ int main()
     catan.pointStutus();
     cout << endl;
 
+    // opening new teminal window to print there all the Instructions
     system("gnome-terminal -- bash -c 'cat mypipe; exec bash'");
     std::ofstream pipe("mypipe");
     
     if (pipe.is_open()) {
 
+        // printing all the Instructions in the seconde window so the player will always be able to see them
         pipe << "this is the map of the action you can preform in you'r turn:"<< endl << endl;
         
         pipe << "0 - finish your turn"<< endl;
@@ -100,8 +105,11 @@ int main()
         
     }
 
+    // start the game in each itarreate check if one of the players have 10 points and if someone have sp finish the turn
     while(!catan.isWinner()){
+        // call ing the turn function for the player
         catan.turn(org);
+        // there is 3 player so if we want to move to the next one we will do %3
         org = (org + 1) % 3;
     }
 

@@ -11,11 +11,12 @@ Email: noa.fishman@gmail.com
 using namespace std;
 
 namespace noa{
-
+    // return the 1 for settelment and 2 for city (0 for nothing)
     int Vertex::getBuild(){
         return build;
     }
 
+    // check if no one owne this ver and if not build new settel 
     bool Vertex::newSettel(int n, int typ, Player* pNew){
 
         if(build == 0){
@@ -33,6 +34,7 @@ namespace noa{
         }
     }
 
+    // check that the player owne the ver and build city
     bool Vertex::newCity(Player* pNew){
 
         if(build == 1 && pNew == p){
@@ -45,20 +47,24 @@ namespace noa{
         }
     }
 
+    // return the owner number (by the order of the list in catan)
     int Vertex::getOwner(){
         return owner;
     }
 
+    // update the player of this ver resource cards
     void Vertex::getCards(string resource){
         if(build != 0 && p != nullptr){
             p->getCards(build, resource);
         }
     }
 
+    // return the ver number by the order  of the vertexes in the board list
     int Vertex::getNum(){
         return num;
     }
 
+    // retuen the string as it will be shown in the map that printing
     string Vertex::getVer(){
         if(owner == 0){
             if(build == 0){
@@ -116,6 +122,7 @@ namespace noa{
         return "";
     }
 
+    // return the vector of numbers that the roads of this ver
     vector<int>& Vertex::gerRoads(){
         return roads;
     }

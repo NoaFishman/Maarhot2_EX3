@@ -1,6 +1,6 @@
-/**
- * Demo file for Ex3.
- *
+/*
+ * ID: 319055430
+ * Email: noa.fishman@gmail.com
  */
 #include <iostream>
 #include <stdexcept>
@@ -9,21 +9,26 @@
 using namespace std;
 using namespace noa;
 
+// this is the demo main class (there is no hpp file so first i wrote the function an then the main)
+
 void turnChoise(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, bool* blessYear, Catan* catan, vector<int> input, int* j){
-    
+    // this is the same function like in the catan class bu it get the input as vector insted to wait for input from the user
     bool devFlag = false;
     cout << endl << catan->getPlayerName(n) <<"'s turn:"<<endl;
     
     int dice = input[*j];
     cout << "dice: " << input[*j] << endl;
     (*j)++;
+    // we get the dice result also
     if(dice == 7){
+        // if the dice show 7 so players with more than 7 resource cards need to throw half
         for(int i=0; i<3; i++){
             if(catan->getPlayer(n).numOfCards() > 7){
                 int shouldThrow = catan->getPlayer(n).numOfCards() / 2;
                 cout << endl;
                 catan->cardStutus();
                 while(shouldThrow > 0){
+                    // ask the player which cards to throw until he throw the amont he need to
                     cout << catan->getPlayerName(i) << " you have more then 7 cards you need to throw "<< shouldThrow << endl;
                     cout << "choose the number of the resours cards you want to change and how many" << endl;
                     cout << "0 - 🪨, 1 - 🧱, 2 - 🌾, 3 - 🪵, 4 - 🐑" << endl;
@@ -47,17 +52,18 @@ void turnChoise(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, b
 
     cout << endl;
     catan->getPlayer(n).whatsMyCards();
-    
+    // print the player cards
     cout << endl << catan->getPlayerName(n) << " choose what you want to do:" << endl;
     int choise = input[*j];
     cout << input[*j] << endl;
     (*j)++;
-
+    // get the player choise
     while(choise != 0 || *blessYear){
         switch(choise){
             case 0:
+            // chose to finish his turn but need to check that if he used in this turn the year of bless card 
+            // that he realy used all of the resource cards
                 if(*blessYear == true && (*amountB1 < catan->getPlayer(n).getResorceAmont(*bless1) || *amountB2 < catan->getPlayer(n).getResorceAmont(*bless2))){
-
                     cout << "sorry you didn't use all the resorce card from the year of bless card you cant finish you'r turn"<< endl;
                     choise = 10;
                 }
@@ -68,6 +74,7 @@ void turnChoise(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, b
                 break;
 
             case 1:
+            // the player chose to buy road
                 cout << "choose where to place the road" << endl;
                 if(catan->getPlayer(n).canRoad()){
                     int v1 = input[*j];
@@ -86,6 +93,7 @@ void turnChoise(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, b
                 break;
 
             case 2:
+            // the player chose to  buy settelment
                 if(catan->getPlayer(n).canSettel()){
                     cout << "choose where to place the setellment" << endl;
                     int v1 = input[*j];
@@ -100,6 +108,7 @@ void turnChoise(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, b
                 break;
 
             case 3:
+            // the player chose to buy city
                 if(catan->getPlayer(n).canCity()){
                     cout << "choose where the settelment you want to upgade" << endl;
                     int v1 = input[*j];
@@ -114,6 +123,7 @@ void turnChoise(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, b
                 break;
 
             case 4:
+            // the player chose to buy dev card
                 if(catan->getPlayer(n).canDevelopCard()){
                     int card = catan->getDevCard();
                     catan->getPlayer(n).buyDevelopmentCard();
@@ -123,6 +133,7 @@ void turnChoise(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, b
                 break;
 
             case 5:
+            // the player chose to use dev card
                 if(!devFlag){
                     catan->getPlayer(n).printDevCards();
                     catan->useDevCard(n, bless1, bless2, amountB1, amountB2, blessYear);
@@ -133,6 +144,7 @@ void turnChoise(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, b
                 break;
 
             case 6:{
+                // the player chose to do 4 to 1
                 cout << "choose the number of the resours cards you want to change " << endl;
                 cout << "and them the number of the resours card to get instade " << endl;
                 cout << "🪨 -0,  🧱 -1 ,  🌾-2,  🪵 -3,  🐑 -4" << endl;
@@ -146,11 +158,12 @@ void turnChoise(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, b
                 break;
             }
             case 7:{
-                //board.printVer();
+                //the plaer chose to print the board status
                 catan->getBoard().boardStutus();
                 break;
             }
             case 8:{
+                // the player chos to swutch cards with another player
                 cout << "who you wnat to switch cards with?"<< endl;
                 string name1;
                 cin >> name1;
@@ -191,20 +204,23 @@ void turnChoise(int n, int* bless1, int* bless2, int* amountB1, int* amountB2, b
             }
 
             case 9:
+            // the player chose to print the point status
                 catan->pointStutus();
                 break;
 
             case 10:
+            // theplayer chose to print the resource card status
                 catan->cardStutus();
                 break;
             
 
         }
+        // checking if the player used the resources he got in the year of bless
         if(*blessYear == true && *amountB1 >= catan->getPlayer(n).getResorceAmont(*bless1) && *amountB2 >= catan->getPlayer(n).getResorceAmont(*bless2)){
             *blessYear = false;
             
         }
-
+        // the player choosingwhat to do next
         cout << endl << catan->getPlayerName(n) << " what you want to do next?" << endl;
         choise = input[*j];
         cout << input[*j] << endl;
@@ -226,10 +242,10 @@ int main()
     int n = catan.ChooseStartingPlayer();   // should print the name of the starting player, assume it is Amit.
 
     int org = n;
-
+    // creat a vector that will keep all the inputs
     vector<int> input = {7, 5, 18, 25, 39, 40, 35, 40, 20, 25, 26, 44, 6, 5, 37};
     int j = 0;
-
+    // first round of settelment
     for(int i=0; i<3; i++){
 
         cout << catan.getPlayerName(n) <<" choose where you want your first settlement" << endl;
@@ -241,7 +257,7 @@ int main()
         n = (n + 1) %3;
     }
 
-
+    // seconde round of settelment
     for(int i=0; i<3; i++){
 
         n = ((n - 1 + 3) % 3);
@@ -259,14 +275,16 @@ int main()
         catan.placeSettelemntFirst(verNumNew, n);
 
     }
-
+    // updats al the players resource cards
     catan.getCards();
     cout << endl;
+    // print the cards and map status
     catan.cardStutus();
     cout << endl;
     catan.pointStutus();
     cout << endl;
 
+    // printing the instaraction in another terminal window
     system("gnome-terminal -- bash -c 'cat mypipe; exec bash'");
     std::ofstream pipe("mypipe");
     
@@ -296,17 +314,17 @@ int main()
         
     }
 
+    // changing the input vector for the next 2 rounds
     input = {6, 7, 10, 1, 6, 4, 0, 9, 6, 2, 1, 10, 2, 26, 7, 10, 0, 11, 2, 35, 9, 0, 3, 1, 4, 11, 0, 9, 4, 0, 6, 1, 35, 28, 1, 28, 24, 7, 9, 0};
     j=0;
 
     n=org;
     for(int i=0; i<6; i++){
-        //catan.turn(org);
-        
+       
         // those parameter will help if the player use bless yeard card
         bool blessYear = false;
         int bless1, bless2, amountB1, amountB2;
-
+        // check if the player have dev cards and if he want to use them instad of his turn
         if(catan.getPlayer(n).totalDevCards() > 0){
             cout <<catan.getPlayerName(n) << " do you want to use dev card? y/n" << endl;
             string ans;
@@ -322,10 +340,11 @@ int main()
             }
         
         }
+        // doing the turn
         else{
             turnChoise(n, &bless1, &bless2, &amountB1, &amountB2, &blessYear, &catan, input , &j);
         }
-
+        // moving for the next player
         n = (n + 1) % 3;
     }
     cout << "the 2 turne for each player over :)" << endl;

@@ -8,10 +8,9 @@ using namespace std;
 
 namespace noa{
 
-    //RandomInitializer randomInitializer;
-
+    // this function give each hex his resource and number randomly
     void Board:: biuldBoard(){
-        vector<int> numbers = {0,0,1,2,2,2,2,0,2,2,2,2,1}; // th index is the number we need to place
+        vector<int> numbers = {0,0,1,2,2,2,2,0,2,2,2,2,1}; // the index is the number we need to place
         vector<int> resource = {3,3,4,4,4}; // 0 = Mountains, 1 = Hills, 2 = Fields, 3 = Forest, 4 = Pasture
         vector<string> places; 
         places.push_back("🪨");
@@ -27,14 +26,17 @@ namespace noa{
                 hexa[i].setHex("0", 5); // represent the desert in the middle
             }
             else{
+                // randomly choose two numbers in the rang for each vector
                 x1 = rand()%13;
                 x2 = rand()%5;
+                // if all of the resorces or number from this typ was taken so add one until you found one you can use
                 while(numbers[x1] == 0){
                     x1 = (x1 + 1) %13;
                 }
                 while(resource[x2] == 0){
                     x2 = (x2 + 1) %5;
                 }
+                // set each hex with his new data
                 hexa[i].setHex(places[x2], x1);
                 numbers[x1]--;
                 resource[x2]--;
@@ -43,6 +45,8 @@ namespace noa{
     }
 
     void Board:: biuldBoardDemo(){
+        // in my demo class and some of the tests i used the classic board (like the one in the rules) 
+        // so i could test and show other things
         hexa[0].setHex("🪨", 10);
         hexa[1].setHex("🌾", 12);
         hexa[2].setHex("🐑", 2);
@@ -73,14 +77,14 @@ namespace noa{
     bool Board::newRoad(Vertex& v1, Vertex& v2, int n){
 
         int curr = static_cast<int>(roads.size());
-
+        // finding the road in the road list
         for(int i=0; i<static_cast<int>(roads.size()); i++){
             if(roads[i].isThisRoad(v1,v2) == true){
                 curr = i;
                 break;
             }
         }
-
+        // check if possible to build ther
         if(curr < static_cast<int>(roads.size()) && roads[curr].isTaken() == false){
             
             roads[curr].setRoad(n);
@@ -99,11 +103,11 @@ namespace noa{
         return true;
     }
 
-    // check that the player can build ther a road
+    // check that the player can build there a road
     bool Board::canBuildRoad(Vertex& v1, Vertex& v2, int n){ 
 
         int numV1 = v1.getNum(), numV2 = v2.getNum();
-
+        // look for settelments of this player arond
         if(ver[numV1 -1].getOwner() == n && ver[numV1 -1].getBuild() != 0){
             return true; // he have city or settelment in v1  
         }
@@ -112,19 +116,20 @@ namespace noa{
             return true; // he have city or settelment in v2
         }
 
+        // check for other road of this player around the first vertex
         vector<int> ro = ver[numV1 -1].gerRoads(); // get the vertex's roads numbers
         if(!ro.empty()){
             for(int i=0; i<static_cast<int>(ro.size()); i++){
-                if(roads[ro[i]-1].getOwner() == n){ //check if own of the roads around this vertex belong to the player
+                if(roads[ro[i]-1].getOwner() == n){ //check if owne of the roads around this vertex belong to the player
                     return true;
                 }
             }
         }
-
+        // check for other road of this player around the secomd vertex
         vector<int> ro2 = ver[numV2 -1].gerRoads(); // get the vertex's roads numbers
         if(!ro2.empty()){
             for(int i=0; i<static_cast<int>(ro2.size()); i++){ 
-                if(roads[ro2[i]-1].getOwner() == n){ //check if own of the roads around this vertex belong to the player
+                if(roads[ro2[i]-1].getOwner() == n){ //check if owne of the roads around this vertex belong to the player
                     return true;
                 }
             }
@@ -134,12 +139,7 @@ namespace noa{
 
     }
 
-    void Board::printVer(){
-        for(int i=0; i<static_cast<int>(ver.size()); ++i){
-            cout << "ver num: " << ver[i].getNum() <<" ver build: "<<ver[i].getBuild() << " ver owner: "<<ver[i].getOwner()<<endl;
-        }
-    }
-
+    // check if it is possible for this player to build on this ver
     bool Board::canBuildSettel(int v, int n, Player* pNew){
         vector<int> ro = ver[v -1].gerRoads();
         if(!ro.empty()){
@@ -154,7 +154,7 @@ namespace noa{
         }
         if(!ro.empty()){
             for(int i=0; i<static_cast<int>(ro.size()); i++){
-                if(roads[ro[i]-1].getOwner() == n){ //check if own of the roads around this vertex belong to the player
+                if(roads[ro[i]-1].getOwner() == n){ //check if owne of the roads around this vertex belong to the player
                     int nextV = roads[ro[i]-1].getTheOtherVer(v);
                     vector<int> ro2 = ver[nextV -1].gerRoads();
                     if(!ro2.empty()){
@@ -171,6 +171,8 @@ namespace noa{
         return false;
     }
 
+    // for the first and second round the rule fo settel are diffrent
+    // so i did diffrent function that not lookink for the player roads around
     bool Board::canBuildSettelFirst(int v, int n, Player* pNew){
         bool flag = true;
         vector<int> ro = ver[v -1].gerRoads();
@@ -188,6 +190,8 @@ namespace noa{
         return false;
     }
 
+    // this function run on all the hexagons and update the resource cards 
+    // of the players that settel on thers vertex if the 2 first settel round
     void Board::getCardsStart(){
         for(int i=0; i< static_cast<int>(hexa.size()); i++){
             vector<int> temp = hexa[i].getCards();
@@ -199,6 +203,9 @@ namespace noa{
             ver[temp[5] -1].getCards(hexa[i].getPlace());
         }
     }
+
+    // run on all the hexagons and if theur number is the number on the dices,
+    // update all the resource card of the players who settel on the hex vertexs
     void Board::getCards(int d){
         for(int i=0; i< static_cast<int>(hexa.size()); i++){
             int num = hexa[i].getNum();
@@ -214,43 +221,7 @@ namespace noa{
         }
     }
 
-    //   void Board::printBoard(){
-
-    //     cout << "                            (1)---(2)"<< endl;
-    //     cout << "                           /         \\ "<< endl;
-    //     cout << "                          /     " << hexa[0].getPlace()<<"     \\ "<< endl;
-    //     cout << "                (10)---(3)     "<< internal << setw(2)<<hexa[0].getNum()<<"      (4)---(11) "<< endl;
-    //     cout << "               /          \\           /          \\ "<< endl;
-    //     cout << "              /     "<<hexa[1].getPlace() <<"     \\         /     "<<hexa[2].getPlace()<<"     \\ "<< endl;
-    //     cout << "    (15)---(9)      "<< internal << setw(2)<<hexa[1].getNum()<<"      (5)---(6)     "<< internal << setw(2)<<hexa[2].getNum()<<"      (12)---(21)"<< endl;
-    //     cout << "  /           \\           /         \\            /           \\ "<< endl;
-    //     cout << " /      "<<hexa[3].getPlace()<<"     \\         /    "<<hexa[4].getPlace()<<"      \\          /     "<<hexa[5].getPlace()<<"      \\ "<< endl;
-    //     cout << "(16)   "<< internal << setw(2)<<hexa[3].getNum()<<"      (8)---(7)      "<< internal << setw(2)<<hexa[4].getNum()<<"      (14)---(13)      "<< internal << setw(2)<<hexa[5].getNum()<<"     (22)"<< endl;
-    //     cout << " \\            /         \\             /         \\             / "<< endl;
-    //     cout << "  \\          /    "<<hexa[6].getPlace()<<"      \\          /      "<<hexa[7].getPlace()<<"    \\           / "<< endl;
-    //     cout << "   (17)---(18)      "<< internal << setw(2)<<hexa[6].getNum()<<"     (19)---(20)     "<< internal << setw(2)<<hexa[7].getNum()<<"     (24)---(23)"<< endl;
-    //     cout << "  /          \\            /          \\           /           \\ "<< endl;
-    //     cout << " /     "<<hexa[8].getPlace()<<"     \\          /   Desert   \\          /    "<< hexa[10].getPlace() <<"     \\ "<< endl;
-    //     cout << "(29)    "<< internal << setw(2)<<hexa[8].getNum()<<"    (25)---(26)             (27)---(28)      "<< internal << setw(2)<<hexa[10].getNum()<<"    (34)"<< endl;
-    //     cout << " \\            /          \\            /         \\             / "<< endl;
-    //     cout << "  \\          /     "<<hexa[11].getPlace()<<"     \\          /     "<< hexa[12].getPlace()<<"     \\          / "<< endl;
-    //     cout << "   (30)---(31)     "<< internal << setw(2)<<hexa[11].getNum()<<"      (32)---(33)      "<< internal << setw(2)<<hexa[12].getNum()<<"    (35)---(36)"<< endl;
-    //     cout << "   /         \\             /         \\           /           \\ "<< endl;
-    //     cout << "  /     "<<hexa[13].getPlace()<<"     \\           /     "<< hexa[14].getPlace()<<"     \\         /      "<<hexa[15].getPlace()<<"     \\ "<< endl;
-    //     cout << "(41)    "<< internal << setw(2)<<hexa[13].getNum()<<"    (37)---(38)      "<< internal << setw(2)<<hexa[14].getNum()<<"     (39)---(40)     "<< internal << setw(2)<<hexa[15].getNum()<<"      (48)"<< endl;
-    //     cout << " \\            /          \\            /         \\             / "<< endl;
-    //     cout << "  \\          /     "<< hexa[16].getPlace()<<"      \\          /    "<< hexa[17].getPlace()<<"     \\           / "<< endl;
-    //     cout << "   (42)---(43)      "<< internal << setw(2)<<hexa[16].getNum()<<"     (44)---(45)     "<< internal << setw(2)<<hexa[17].getNum()<<"    (46)---(47)"<< endl;
-    //     cout << "             \\            /          \\           /   "<< endl;
-    //     cout << "              \\          /     "<< hexa[18].getPlace() <<"     \\         /  "<< endl;
-    //     cout << "               (49)---(50)      "<< internal << setw(2)<<hexa[18].getNum()<<"     (51)---(52)  "<< endl;
-    //     cout << "                         \\            /"<< endl;
-    //     cout << "                          \\          /"<< endl;
-    //     cout << "                           (53)---(54)"<< endl;
-
-        
-    // }
-
+    // this function criat a string matrix that represent the board and printing the matrix
     void Board::boardStutus(){
         vector<vector<string>> bobo(31, vector<string>(34, "  "));
         bobo[0][15] = ver[0].getVer();

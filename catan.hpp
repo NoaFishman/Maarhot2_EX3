@@ -12,12 +12,14 @@ namespace noa{
 
     class Catan{
 
+        // the catan is represent a game so their is board player and cards
         vector<Player> players;
         Board board;
         vector<int> developmentCards;// represent the stack of development card
 
         public:
 
+            // constructor
             Catan(Player& new_p1, Player& new_p2, Player& new_p3){
                 players.push_back(new_p1);
                 players.push_back(new_p2);
@@ -27,6 +29,7 @@ namespace noa{
                 developmentCards = {5,4,2,2,2}; // 0-nghit, 1-V point, 2-bless year, 3-build 2 road, 4-monopol 
             }
 
+            // another constractor that build the board for the demo (the bool is always true it is a sighn for the demo)
             Catan(Player& new_p1, Player& new_p2, Player& new_p3, bool demo){
                 if(demo){
                     board.biuldBoardDemo();
@@ -39,8 +42,7 @@ namespace noa{
                 developmentCards = {5,4,2,2,2}; // 0-nghit, 1-V point, 2-bless year, 3-build 2 road, 4-monopol 
             }
 
-            //~Catan(){}
-
+            // all the functions exlanations will be above each one of them in the cpp file
             int ChooseStartingPlayer();
             Board getBoard();
             bool isWinner();

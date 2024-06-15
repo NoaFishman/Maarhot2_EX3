@@ -4,12 +4,13 @@ Email: noa.fishman@gmail.com
 */
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest.h"
-#include "catch.hpp"
+#include "catan.hpp"
 using namespace doctest;
 
 const int MIN_TESTS = 20;
 
 int return_code = -1;
+// this class is the main class of te tests that call the test functins and tell how many test i did and if i did less then 20
 
 struct ReporterCounter : public ConsoleReporter
 {

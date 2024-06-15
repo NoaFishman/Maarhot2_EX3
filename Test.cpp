@@ -13,6 +13,8 @@ RandomInitializer randomInitializer;
 
 TEST_CASE("Choosing starting player")
 {
+    // this test checking that the function thatchoose the first player is truly random
+    // by run the function 100 time and see that all the player was chosen at least 20 times
     Player p1("noa");
     Player p2("omer");
     Player p3("roni");
@@ -31,6 +33,8 @@ TEST_CASE("Choosing starting player")
 
 TEST_CASE("Random board")
 {
+    // this test checking that the creating of the board is truly random
+    // by creat 2 boards and comper them 
     cout << "here"<< endl;
     Board board1;
     cout << "noa"<< endl;
@@ -54,6 +58,10 @@ TEST_CASE("Random board")
 }
 
 TEST_CASE("setelment"){
+    // this test is checking that when i build new settel it is stand with all the rules
+    // 2 roads distance
+    // just nex to your owne road
+    // can't sattel on someone else settelment
     Player p1("noa");
     Player p2("omer");
     Board board;
@@ -67,7 +75,7 @@ TEST_CASE("setelment"){
     CHECK(board.canBuildSettelFirst(8, 2, &p2) == false);
 }
 
-TEST_CASE("Choosing starting player"){
+TEST_CASE("dice random"){
     // I check for each number if it roll more times then its probability
     Player p1("noa");
     vector<int> counter = {0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -91,6 +99,9 @@ TEST_CASE("Choosing starting player"){
 }
 
 TEST_CASE("road"){
+    // this test checking that when i build new road it is stand with all the rules
+    // next to you'r road or settelment or city
+    // not on someone else road
     Player p1("noa");
     Player p2("omer");
     Board board;
@@ -136,6 +147,7 @@ TEST_CASE("road"){
 }
 
 TEST_CASE("city"){
+    // this test checking that when i build new city it is stand al the rules
    Board b;
    b.biuldBoardDemo();
    Player p1("noa");

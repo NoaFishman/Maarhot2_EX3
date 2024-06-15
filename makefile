@@ -27,6 +27,7 @@ test_target: $(TEST)
 
 demo_target: $(DEMO)
 
+#do the run after make
 catan: Catan
 	./$(CATAN)
 

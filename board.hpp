@@ -16,15 +16,16 @@ namespace noa{
 
     class Board{
 
+        // the board have 3 vectors one for vertex, one for hexagons and one for roads
         vector<Vertex> ver;
         vector<Hex> hexa;
         vector<Road> roads;
 
         public:
 
+            // all the functions exlanations will be above each one of them in the cpp file
             void biuldBoard();
             void biuldBoardDemo();
-            //void printBoard();
             Vertex& getVer(int verNum);
             bool newRoad(Vertex& v1, Vertex& v2, int n);
             void getCardsStart();
@@ -32,7 +33,6 @@ namespace noa{
             bool canBuildRoad(Vertex& v1, Vertex& v2, int n);
             bool canBuildSettel(int v, int n, Player* pNew);
             bool canBuildSettelFirst(int v, int n, Player* pNew);
-            void printVer();// deleteeee!!!!!!!!!!!!!!
             void boardStutus();
             vector<Hex>& getHex(){
                 return hexa;
@@ -43,7 +43,8 @@ namespace noa{
 
             // constractor
             Board(){
-
+                // build all the vertexs roads and hexas and insert to the lists
+                
                 Vertex v1(1,1,2), v2(2,1,3), v3(3,2,4,7), v4(4,3,5,8), v5(5,7,11,15);
                 Vertex v6(6,8,11,16), v7(7,15,19,23), v8(8,14,19,22), v9(9,6,10,14), v10(10,4,6);
                 Vertex v11(11,5,9), v12(12,9,12,17), v13(13,17,20,25), v14(14,16,20,24), v15(15,10,13); 
@@ -155,13 +156,7 @@ namespace noa{
                 ver.push_back(v36), ver.push_back(v37), ver.push_back(v38), ver.push_back(v39), ver.push_back(v40);
                 ver.push_back(v41), ver.push_back(v42), ver.push_back(v43), ver.push_back(v44), ver.push_back(v45);
                 ver.push_back(v46), ver.push_back(v47), ver.push_back(v48), ver.push_back(v49), ver.push_back(v50);
-                ver.push_back(v51), ver.push_back(v52), ver.push_back(v53), ver.push_back(v54);
-                            
+                ver.push_back(v51), ver.push_back(v52), ver.push_back(v53), ver.push_back(v54);       
             }
-
-            //~Board() = default;
-
     };
-
-    
 }
